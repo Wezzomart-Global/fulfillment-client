@@ -1,34 +1,13 @@
-<?php
+# Anatolia Fulfillment Client
 
-declare(strict_types=1);
+## Kullanım
 
-namespace AnatoliaFulfillment\Client\Tests\Feature;
-
-use AnatoliaFulfillment\Client\Client;
-use PHPUnit\Framework\TestCase;
-
-final class OrderTest extends TestCase
-{
-    /**
-     * @var Client
-     */
-    public $fulfillmentClient = null;
-
-    protected function setUp(): void
-    {
-        $this->fulfillmentClient = new Client(
-            accessToken: 'access_token',
+```php
+$client = new Client(
+            accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9....',
         );
-    }
 
-    /**
-     * @test
-     * @covers \AnatoliaFulfillment\Client\Client::order()
-     */
-    public function create(): void
-    {
-        $response = $this->fulfillmentClient->order()->create(
-            [
+$client->order()->create(         [
                 "magento_order_id" => "123",
                 "vendor_panel_order_id" => 131,
                 "currency" => "EUR",
@@ -95,11 +74,5 @@ final class OrderTest extends TestCase
                     "shipping_total" => 100,
                     "total" => 1100,
                 ],
-            ]
-        );
-
-        $this->assertInstanceOf(\AnatoliaFulfillment\Client\Response\Order::class, $response);
-
-        $this->assertArrayHasKey('status', $response->toArray());
-    }
-}
+            ])
+```
