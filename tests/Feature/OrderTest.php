@@ -16,9 +16,7 @@ final class OrderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fulfillmentClient = new Client(
-            accessToken: 'access_token',
-        );
+        $this->fulfillmentClient = new Client();
     }
 
     /**

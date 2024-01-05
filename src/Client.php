@@ -7,13 +7,13 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 class Client
 {
     protected GuzzleHttpClient $client;
-    public function __construct(
-        public string $accessToken,
-    ) {
+
+    public function __construct()
+    {
         $this->client = new GuzzleHttpClient([
-            'base_uri' => 'https://tfm.wezzomart.io',
+            'base_uri' => config('fulfillment-client.base_uri'),
             'headers' => [
-                'Authorization' => 'Bearer ' . $this->accessToken,
+                'Authorization' => sprintf('Bearer %s', config('fulfillment-client.access_token')),
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json'
             ],
@@ -23,5 +23,10 @@ class Client
     public function order(): Request\Order
     {
         return new Request\Order($this->client);
+    }
+
+    public function current(): Request\Current
+    {
+        return new Request\Current($this->client);
     }
 }
